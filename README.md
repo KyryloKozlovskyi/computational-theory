@@ -18,6 +18,82 @@ computational-theory/
 └── requirements.txt    # Python dependencies
 ```
 
+## Notebook Structure
+
+The notebook follows a clear narrative structure organized as follows:
+
+```
+problems.ipynb
+│
+├── Title & Introduction
+│   ├── # Computational Theory Assessment (Title)
+│   └── ## Introduction (Overview, goals, and approach)
+│
+├── Imports
+│   └── numpy, hashlib
+│
+├── ## Problem 1: Binary Words and Operations
+│   ├── Problem Description & Understanding
+│   ├── Approach & Theory (bitwise operations explained)
+│   ├── Parity(x, y, z) — implementation + tests
+│   ├── Ch(x, y, z) — implementation + tests
+│   ├── Maj(x, y, z) — implementation + tests
+│   ├── Sigma0(x) — implementation + tests
+│   ├── Sigma1(x) — implementation + tests
+│   ├── sigma0(x) — implementation + tests
+│   └── sigma1(x) — implementation + tests
+│
+├── ## Problem 2: Fractional Parts of Cube Roots
+│   ├── Problem Description & Approach
+│   ├── Mathematical Background (cube roots, primes)
+│   ├── primes(n) — prime number generator + tests
+│   ├── Newton-Raphson Discussion
+│   ├── fractional_part_cube_root() — implementation
+│   ├── generate_k_constants() — K constant generation
+│   ├── Display results in hexadecimal
+│   └── Verification against FIPS 180-4 standard
+│
+├── ## Problem 3: Padding
+│   ├── Problem Description & Requirements
+│   ├── Padding Theory (FIPS 180-4 Sections 5.1.1, 5.2.1)
+│   ├── Step-by-step padding algorithm
+│   ├── block_parse(msg) — generator function
+│   └── Tests (various message lengths, edge cases)
+│
+├── ## Problem 4: Hashes
+│   ├── Problem Description & Function Signature
+│   ├── SHA-256 Compression Theory
+│   ├── Message Schedule Explanation
+│   ├── 64-Round Mixing Process
+│   ├── hash(current, block) — compression function
+│   ├── sha256(message) — complete pipeline
+│   └── Tests against RFC 6234 test vectors
+│
+├── ## Problem 5: Passwords
+│   ├── Problem Description & Target Hashes
+│   ├── Dictionary Attack Theory
+│   ├── Why SHA-256 Alone is Insufficient
+│   ├── Modern Password Security (salting, KDFs)
+│   ├── sha256_utf8() — helper function
+│   ├── Dictionary attack implementation
+│   ├── Results verification
+│   └── Security recommendations discussion
+│
+└── ## Conclusion
+    ├── Key Achievements & Insights
+    ├── Technical Challenges & Solutions
+    ├── Broader Context & Applications
+    └── Future Directions
+```
+
+Each problem section follows a consistent pattern:
+
+1. **Problem Description** — What needs to be solved
+2. **Understanding/Approach** — My interpretation and strategy
+3. **Theory/Background** — Mathematical and cryptographic foundations
+4. **Implementation** — Well-documented Python code with docstrings
+5. **Testing** — Verification against known values and edge cases
+
 ## Quick Start
 
 ### Prerequisites
@@ -164,22 +240,54 @@ Each problem includes test cases verified against:
 
 ## References
 
-### Primary Sources
+All references used throughout the notebook are listed below, organized by category.
 
-- [FIPS 180-4: Secure Hash Standard](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf) - Official NIST specification
-- [RFC 6234](https://datatracker.ietf.org/doc/html/rfc6234) - SHA test vectors and examples
+### Primary Standards & Specifications
 
-### Additional Resources
+- [FIPS 180-4: Secure Hash Standard](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf) - Official NIST specification for SHA-256
+- [RFC 6234: US Secure Hash Algorithms](https://datatracker.ietf.org/doc/html/rfc6234) - SHA test vectors and implementation examples
+- [NIST Cryptographic Standards and Guidelines](https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines) - NIST cryptography program
+
+### Python & NumPy Documentation
 
 - [NumPy Documentation](https://numpy.org/doc/) - Array operations and data types
+- [NumPy uint32](https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.uint32) - 32-bit unsigned integer type
+- [NumPy cbrt](https://numpy.org/doc/stable/reference/generated/numpy.cbrt.html) - Cube root function
 - [Python hashlib](https://docs.python.org/3/library/hashlib.html) - Standard library hash functions
+- [Python bytes](https://docs.python.org/3/library/stdtypes.html#bytes) - Binary data type documentation
 - [PEP 8](https://peps.python.org/pep-0008/) - Python style guide
+
+### Tutorials & Educational Resources
+
+- [Real Python: Bitwise Operators](https://realpython.com/python-bitwise-operators/) - Understanding bitwise operations
 - [Real Python: Generators](https://realpython.com/introduction-to-python-generators/) - Generator function patterns
+- [Real Python: Python Bytes](https://realpython.com/python-bytes/) - Working with binary data
+- [GeeksforGeeks: Bitwise Operators](https://www.geeksforgeeks.org/python-bitwise-operators/) - Bitwise operation examples
+- [GeeksforGeeks: Newton-Raphson Method](https://www.geeksforgeeks.org/engineering-mathematics/newton-raphson-method/) - Numerical methods
+- [Computerphile: SHA-256](https://www.youtube.com/watch?v=DMtFhACPnTY) - Visual explanation of SHA-256
+- [Stack Overflow: Binary Rotation in Python](https://stackoverflow.com/questions/5832982/how-to-get-the-logical-right-binary-rotation-in-python) - Rotation implementation
 
-### Security Resources
+### Cryptography & Security
 
-- [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
-- Wikipedia articles on [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [scrypt](https://en.wikipedia.org/wiki/Scrypt), [Argon2](https://en.wikipedia.org/wiki/Argon2)
+- [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html) - Password security best practices
+- [Hashcat Benchmarks](https://gist.github.com/epixoip/ace60d09981be09544fdd35005051505) - GPU hashing performance
+- [NordPass Common Passwords](https://nordpass.com/most-common-passwords-list/) - Annual password analysis
+
+### Wikipedia References
+
+- [SHA-2](https://en.wikipedia.org/wiki/SHA-2) - SHA-256 algorithm overview and cryptanalysis
+- [Prime Numbers](https://en.wikipedia.org/wiki/Prime_number) - Mathematical foundations
+- [Trial Division](https://en.wikipedia.org/wiki/Trial_division) - Prime number generation algorithm
+- [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method) - Numerical root finding
+- [Merkle-Damgård Construction](https://en.wikipedia.org/wiki/Merkle%E2%80%93Damg%C3%A5rd_construction) - Hash function design
+- [Avalanche Effect](https://en.wikipedia.org/wiki/Avalanche_effect#In_cryptography) - Cryptographic property
+- [Length Extension Attack](https://en.wikipedia.org/wiki/Length_extension_attack) - Security vulnerability
+- [Endianness](https://en.wikipedia.org/wiki/Endianness) - Byte ordering
+- [UTF-8](https://en.wikipedia.org/wiki/UTF-8) - Character encoding
+- [RockYou Breach](https://en.wikipedia.org/wiki/RockYou) - Password breach history
+- [bcrypt](https://en.wikipedia.org/wiki/Bcrypt) - Password hashing function
+- [scrypt](https://en.wikipedia.org/wiki/Scrypt) - Memory-hard key derivation
+- [Argon2](https://en.wikipedia.org/wiki/Argon2) - Modern password hashing (PHC winner)
 
 ## Author
 
