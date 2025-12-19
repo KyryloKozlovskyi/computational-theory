@@ -1,206 +1,192 @@
 # Computational Theory
 
-This repository contains my submission for the Computational Theory assessment for Winter 2025/26. The work focuses on implementing core components of the SHA-256 hashing algorithm as specified in the Secure Hash Standard (FIPS 180-4).
+This repository contains my submission for the **Computational Theory** module assessment (Winter 2025/26) at [Atlantic Technological University](https://www.atu.ie/). The work focuses on implementing and understanding the core components of the **SHA-256** cryptographic hash function as specified in [FIPS 180-4, the Secure Hash Standard](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf).
 
-## Project Overview
+## About This Project
 
-This assessment required implementing and analyzing the mathematical and computational foundations of SHA-256 using Python and NumPy. All work is completed in a single Jupyter notebook called `problems.ipynb` that includes five problems covering different aspects of cryptographic hashing.
+The assessment required implementing the mathematical and computational foundations of SHA-256 from scratch using Python and NumPy. Rather than simply calling library functions, I built the algorithm piece by piece to demonstrate understanding of how cryptographic hash functions work internally.
 
-The project demonstrates understanding of:
-- Binary operations and bitwise logic
-- Prime-based constant generation
-- Cryptographic padding schemes
-- Message block processing
-- Hash compression functions
-- Password security and dictionary attacks
-
-Beyond just solving the problems, the notebook includes explanations of the theory behind each concept, test cases for verification, and references to relevant standards and research.
+All work is completed in a single Jupyter notebook ([`problems.ipynb`](problems.ipynb)) containing five interconnected problems that progressively build up to a complete SHA-256 implementation, followed by a practical security analysis.
 
 ## Repository Structure
 
-The repository is organized simply with only the essential files:
-
 ```
 computational-theory/
-├── .gitignore
-├── LICENSE
-├── README.md
-├── problems.ipynb
-└── requirements.txt
+├── .gitignore          # Files excluded from version control
+├── README.md           # This file
+├── problems.ipynb      # Main notebook with all solutions
+└── requirements.txt    # Python dependencies
 ```
 
-- **problems.ipynb**: Main notebook containing all five problems with implementations, explanations, and tests
-- **README.md**: This file, providing an overview and setup instructions
-- **.gitignore**: Specifies files to exclude from version control
-- **requirements.txt**: Lists Python dependencies (numpy)
-- **LICENSE**: MIT license for the project
+## Quick Start
 
-## How to Run
+### Prerequisites
 
-To run the notebook, you'll need to clone this repository and set up a Python environment with the required dependencies.
+- Python 3.8 or higher
+- Git
 
 ### Clone the Repository
 
-Using HTTPS:
 ```bash
 git clone https://github.com/KyryloKozlovskyi/computational-theory.git
 cd computational-theory
 ```
 
-Or using SSH:
-```bash
-git clone git@github.com:KyryloKozlovskyi/computational-theory.git
-cd computational-theory
-```
-
-### Set Up Python Environment
-
-It's recommended to use a virtual environment to keep dependencies isolated:
+### Set Up Environment (Recommended)
 
 ```bash
 python3 -m venv venv
-source venv/bin/activate        # On macOS/Linux
+source venv/bin/activate    # On macOS/Linux
 # or
-venv\Scripts\activate           # On Windows
+venv\Scripts\activate       # On Windows
 ```
 
 ### Install Dependencies
 
-Install the required packages:
 ```bash
 pip install -r requirements.txt
 ```
 
-Or install manually:
-```bash
-pip install numpy
-```
-
-Note: `hashlib` is part of Python's standard library and doesn't need separate installation.
-
 ### Run the Notebook
-
-You can open the notebook using Jupyter:
 
 ```bash
 jupyter notebook problems.ipynb
 ```
 
-Or if you prefer JupyterLab:
+Or using JupyterLab:
+
 ```bash
 jupyter lab problems.ipynb
 ```
 
-Make sure to run the cells in order, starting with the imports at the top. The notebook is structured so each problem builds on previous work.
-
-## Dependencies
-
-This project uses only standard Python libraries plus NumPy:
-
-- **Python 3.8+**: Required for running the code
-- **NumPy**: Used for 32-bit integer operations and array handling
-- **hashlib**: Built-in Python library for SHA-256 implementation in Problem 5
-
-All dependencies are listed in `requirements.txt` for easy installation.
+**Note:** Run cells in order from top to bottom, as later problems depend on functions defined in earlier ones.
 
 ## Problems Overview
 
-The notebook contains five problems that progressively build up to a complete SHA-256 implementation:
+The notebook addresses five problems from the [Secure Hash Standard](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf):
 
-**Problem 1: Hash Functions**
-Implements the seven core bitwise functions used in SHA-256 (Parity, Ch, Maj, Sigma0, Sigma1, sigma0, sigma1). Each function is tested with known inputs.
+### Problem 1: Binary Words and Operations
 
-**Problem 2: Constants**
-Generates the 64 K constants used in SHA-256 from the cube roots of the first 64 prime numbers. Includes verification against the official FIPS values.
+Implements the seven core bitwise functions used in SHA-256's compression function:
 
-**Problem 3: Padding**
-Implements the message padding algorithm specified in FIPS 180-4, including proper handling of message length encoding and block boundaries.
+| Function          | Description                                             |
+| ----------------- | ------------------------------------------------------- |
+| `Parity(x, y, z)` | XOR-based parity function                               |
+| `Ch(x, y, z)`     | Choose function - selects bits from y or z based on x   |
+| `Maj(x, y, z)`    | Majority function - returns majority bit of x, y, z     |
+| `Sigma0(x)`       | Upper-case sigma with rotations (2, 13, 22)             |
+| `Sigma1(x)`       | Upper-case sigma with rotations (6, 11, 25)             |
+| `sigma0(x)`       | Lower-case sigma with rotations (7, 18) and shift (3)   |
+| `sigma1(x)`       | Lower-case sigma with rotations (17, 19) and shift (10) |
 
-**Problem 4: Hashing**
-Implements the core SHA-256 compression function that processes message blocks and updates the hash state. Also includes a complete SHA-256 pipeline.
+Each function uses NumPy's `uint32` type to ensure proper 32-bit arithmetic with modular wraparound.
 
-**Problem 5: Passwords**
-Uses the SHA-256 implementation to crack three password hashes through dictionary attacks. Discusses why unsalted SHA-256 is insufficient for password storage and explores better alternatives like bcrypt, scrypt, and Argon2.
+### Problem 2: Fractional Parts of Cube Roots
 
-## Key Concepts
+Generates the 64 **K constants** used in SHA-256 by:
 
-The notebook explains several important computational concepts that are fundamental to understanding SHA-256:
+1. Finding the first 64 prime numbers
+2. Computing the cube root of each prime
+3. Extracting the first 32 bits of each fractional part
 
-### 32-Bit Words and Modular Arithmetic
+This "nothing up my sleeve" approach proves the constants aren't arbitrary—they're mathematically derived from well-defined operations, ensuring transparency in the algorithm's design.
 
-SHA-256 operates on 32-bit unsigned integers, with all arithmetic done modulo 2³². This means values wrap around when they exceed the maximum 32-bit value. NumPy's `uint32` type handles this automatically.
+### Problem 3: Padding
+
+Implements a generator function `block_parse(msg)` that:
+
+- Accepts a bytes object as input
+- Pads messages according to [FIPS 180-4 Sections 5.1.1 and 5.2.1](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf)
+- Yields 512-bit (64-byte) blocks for processing
+- Handles edge cases where padding spans multiple blocks
+
+The padding scheme appends a `1` bit, followed by zeros, and finally the original message length as a 64-bit big-endian integer.
+
+### Problem 4: Hashes
+
+Implements the `hash(current, block)` function following [FIPS 180-4 Section 6.2.2](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf):
+
+1. Prepares a 64-word message schedule from the 512-bit block
+2. Initializes eight working variables from the current hash state
+3. Performs 64 rounds of mixing using the functions from Problem 1 and constants from Problem 2
+4. Computes the intermediate hash value through feed-forward addition
+
+Also includes a complete `sha256(message)` function that chains all components together, verified against [RFC 6234](https://datatracker.ietf.org/doc/html/rfc6234) test vectors.
+
+### Problem 5: Passwords
+
+Cracks three SHA-256 password hashes through dictionary attack:
+
+| Hash                                                               | Password Found |
+| ------------------------------------------------------------------ | -------------- |
+| `5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8` | `password`     |
+| `873ac9ffea4dd04fa719e8920cd6938f0c23cd678af330939cff53c3d2855f34` | `cheese`       |
+| `b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342` | `P@ssw0rd`     |
+
+Discusses why unsalted SHA-256 is insufficient for password storage and explores modern alternatives:
+
+- **Salting**: Adding unique random data to each password
+- **Key Derivation Functions**: [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [scrypt](https://en.wikipedia.org/wiki/Scrypt), [Argon2](https://en.wikipedia.org/wiki/Argon2)
+- **Iteration counts**: Making hash computation intentionally slow
+
+## Dependencies
+
+| Package                                                   | Purpose                                              |
+| --------------------------------------------------------- | ---------------------------------------------------- |
+| [NumPy](https://numpy.org/)                               | 32-bit integer operations and array handling         |
+| [hashlib](https://docs.python.org/3/library/hashlib.html) | SHA-256 verification in Problem 5 (standard library) |
+
+## Key Concepts Demonstrated
+
+### 32-Bit Modular Arithmetic
+
+SHA-256 operates on 32-bit unsigned integers with all arithmetic done modulo 2³². NumPy's `uint32` type handles overflow correctly.
 
 ### Bitwise Operations
 
-The algorithm relies heavily on bitwise operations (AND, OR, XOR, NOT) and bit rotations. These operations mix the message bits in ways that make the hash function cryptographically secure.
+The algorithm relies on AND, OR, XOR, NOT operations plus circular rotations to mix message bits thoroughly.
 
-### Message Padding
+### Avalanche Effect
 
-Messages must be padded to a multiple of 512 bits before hashing. The padding scheme includes the original message length encoded as a 64-bit integer, which prevents certain types of attacks.
+Small input changes produce completely different outputs—demonstrated through testing where single-bit changes alter approximately 50% of output bits.
 
-### Compression Function
+### Cryptographic Transparency
 
-The hash compression function processes each 512-bit block through 64 rounds of mixing, using the K constants and various bitwise functions to update the internal state.
+The "nothing up my sleeve" constant generation proves no hidden backdoors exist in the algorithm's design.
 
-## Testing and Verification
+## Testing
 
-Each problem includes test cases that verify correctness:
+Each problem includes test cases verified against:
 
-- Functions are tested against known correct outputs
-- SHA-256 results are compared with official test vectors from RFC 6234
-- Password hashes are validated against expected values
-- Edge cases like empty messages are tested
-
-All tests pass, confirming the implementation matches the FIPS 180-4 specification.
+- Known correct outputs from the FIPS 180-4 standard
+- [RFC 6234](https://datatracker.ietf.org/doc/html/rfc6234) SHA-256 test vectors
+- Edge cases (empty messages, messages requiring multi-block padding)
 
 ## References
 
-The work is based on official standards and academic sources:
-
 ### Primary Sources
-- [FIPS 180-4](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf): Secure Hash Standard specification
-- [RFC 6234](https://datatracker.ietf.org/doc/html/rfc6234): SHA test vectors
+
+- [FIPS 180-4: Secure Hash Standard](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf) - Official NIST specification
+- [RFC 6234](https://datatracker.ietf.org/doc/html/rfc6234) - SHA test vectors and examples
 
 ### Additional Resources
-- [NumPy Documentation](https://numpy.org/doc/): For array operations
-- [Python hashlib](https://docs.python.org/3/library/hashlib.html): Standard library documentation
-- [OWASP Password Storage](https://cheatsheetsec.org/cheatsheets/Password_Storage_Cheat_Sheet.html): Security best practices
-- Various Wikipedia articles on cryptographic concepts (bcrypt, scrypt, Argon2, UTF-8)
 
-Additional references specific to each problem are included in the notebook itself.
+- [NumPy Documentation](https://numpy.org/doc/) - Array operations and data types
+- [Python hashlib](https://docs.python.org/3/library/hashlib.html) - Standard library hash functions
+- [PEP 8](https://peps.python.org/pep-0008/) - Python style guide
+- [Real Python: Generators](https://realpython.com/introduction-to-python-generators/) - Generator function patterns
 
-## Development Notes
+### Security Resources
 
-The notebook was developed incrementally with regular commits showing the progression of work. The commit history demonstrates:
-
-- Initial implementations of basic functions
-- Adding comprehensive docstrings and comments
-- Refining test cases
-- Adding explanatory markdown sections
-- Iterative improvements based on testing
-
-This follows the assessment requirement for steady, consistent progress rather than last-minute completion.
-
-## Assessment Criteria
-
-This submission addresses all five assessment categories:
-
-**Presentation**: Clear organization with logical structure, comprehensive README, and well-formatted notebook
-
-**Research**: Citations of FIPS 180-4, RFCs, and academic sources with context for how they inform the work
-
-**Documentation**: Detailed explanations in markdown cells, comprehensive docstrings, inline comments, introduction and conclusion sections
-
-**Development**: Clean, efficient code following Python conventions, proper use of data structures, comprehensive testing
-
-**Consistency**: Regular commits throughout the development period showing incremental progress
+- [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+- Wikipedia articles on [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [scrypt](https://en.wikipedia.org/wiki/Scrypt), [Argon2](https://en.wikipedia.org/wiki/Argon2)
 
 ## Author
 
-Kyrylo Kozlovskyi  
+**Kyrylo Kozlovskyi**  
 G00387873@atu.ie  
 Atlantic Technological University
 
-## License
+---
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+_This project was completed as part of the Computational Theory module (Winter 2025/26)._
