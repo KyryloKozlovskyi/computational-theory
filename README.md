@@ -1,6 +1,6 @@
 # Computational Theory
 
-This repository contains my submission for the **Computational Theory** module assessment (Winter 2025/26) at [Atlantic Technological University](https://www.atu.ie/). The work focuses on implementing and understanding the core components of the **SHA-256** cryptographic hash function as specified in [FIPS 180-4, the Secure Hash Standard](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf).
+This repository contains my submission for the **Computational Theory** module assessment. The work focuses on implementing and understanding the core components of the **SHA-256** cryptographic hash function as specified in [FIPS 180-4, the Secure Hash Standard](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf).
 
 ## About This Project
 
@@ -89,7 +89,7 @@ Generates the 64 **K constants** used in SHA-256 by:
 2. Computing the cube root of each prime
 3. Extracting the first 32 bits of each fractional part
 
-This "nothing up my sleeve" approach proves the constants aren't arbitrary—they're mathematically derived from well-defined operations, ensuring transparency in the algorithm's design.
+This "nothing up my sleeve" approach proves the constants aren't arbitrary, they're mathematically derived from well-defined operations, ensuring transparency in the algorithm's design.
 
 ### Problem 3: Padding
 
@@ -148,7 +148,7 @@ The algorithm relies on AND, OR, XOR, NOT operations plus circular rotations to 
 
 ### Avalanche Effect
 
-Small input changes produce completely different outputs—demonstrated through testing where single-bit changes alter approximately 50% of output bits.
+Small input changes produce completely different outputs, demonstrated through testing where single-bit changes alter approximately 50% of output bits.
 
 ### Cryptographic Transparency
 
@@ -184,9 +184,6 @@ Each problem includes test cases verified against:
 ## Author
 
 **Kyrylo Kozlovskyi**  
-G00387873@atu.ie  
-Atlantic Technological University
+G00425385@atu.ie
 
 ---
-
-_This project was completed as part of the Computational Theory module (Winter 2025/26)._
