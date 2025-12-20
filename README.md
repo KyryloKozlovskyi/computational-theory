@@ -295,3 +295,7 @@ All references used throughout the notebook are listed below, organized by categ
 G00425385@atu.ie
 
 ---
+
+AI assistance tools (GitHub Copilot with Claude Sonnet 4.5, Claude Opus 4.5, and Claude.ai) were used to help generate test cases, draft docstrings, and write code comments.
+
+---
