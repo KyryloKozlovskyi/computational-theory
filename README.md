@@ -30,7 +30,7 @@ problems.ipynb
 │   └── ## Introduction (Overview, goals, and approach)
 │
 ├── Imports
-│   └── numpy, hashlib
+│   └── numpy, hashlib, warnings
 │
 ├── ## Problem 1: Binary Words and Operations
 │   ├── Problem Description & Understanding
@@ -211,6 +211,7 @@ Discusses why unsalted SHA-256 is insufficient for password storage and explores
 | --------------------------------------------------------- | ---------------------------------------------------- |
 | [NumPy](https://numpy.org/)                               | 32-bit integer operations and array handling         |
 | [hashlib](https://docs.python.org/3/library/hashlib.html) | SHA-256 verification in Problem 5 (standard library) |
+| [warnings](https://docs.python.org/3/library/warnings.html) | Suppress warnings in Problem 4 (standard library) |
 
 ## Key Concepts Demonstrated
 
